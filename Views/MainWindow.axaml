@@ -1,0 +1,109 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TAnalyzer.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TAnalyzer.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="TAnalyzer"
+        FontFamily="Segoe UI">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="MinWidth" Value="120"/>
+        </Style>
+    </Window.Styles>
+
+    <DockPanel LastChildFill="True" Margin="20">
+        <!-- Header Section -->
+        <Border DockPanel.Dock="Top" 
+                Background="#512BD4" 
+                CornerRadius="4"
+                Padding="15"
+                Margin="0,0,0,20">
+            <TextBlock Text="Therapy Session Analysis" 
+                       FontSize="20" 
+                       Foreground="White"
+                       FontWeight="Bold"/>
+        </Border>
+
+        <!-- Button Panel -->
+        <StackPanel DockPanel.Dock="Top" 
+                   Orientation="Horizontal" 
+                   Margin="0,0,0,20"
+                   Spacing="10">
+            <Button Content="🎤 Start Recording" 
+                    Command="{Binding StartRecordingCommand}"
+                    Classes="primary"/>
+            
+            <Button Content="⏹ Stop Recording" 
+                    Command="{Binding StopRecordingCommand}"
+                    IsEnabled="{Binding IsRecording}"/>
+            
+            <Button Content="📁 Select Recording" 
+                    Command="{Binding SelectRecordingCommand}"
+                    IsEnabled="{Binding CanSelectFile}"
+                    />
+            
+            <Button Content="📊 Generate Transcript" 
+                    Command="{Binding GenerateTranscriptCommand}"
+                    IsEnabled="{Binding CanGenerateTranscript}"
+                    Classes="accent"/>
+            
+            <Button Content="📊 Generate Report" 
+                    Command="{Binding GenerateReportCommand}"
+                    IsEnabled="{Binding CanGenerateReport}"
+                    Classes="accent"/>
+            
+            
+        </StackPanel>
+
+        <!-- Status/Content Area -->
+        <Border BorderBrush="#E0E0E0" 
+                BorderThickness="1" 
+                CornerRadius="4"
+                Padding="15">
+            <Grid>
+                <!-- Recording Indicator -->
+                <Border Background="#FFF0F0" 
+                        CornerRadius="4"
+                        Padding="10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        IsVisible="{Binding IsRecording}">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <Ellipse Width="10" Height="10" Fill="Red"/>
+                        <TextBlock Text="Recording..." FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Main Content -->
+                <Grid RowDefinitions="Auto,*" Margin="15">
+                    <TextBlock Grid.Row="0" 
+                               Text="{Binding StatusMessage}"
+                               FontSize="16"
+                               TextWrapping="Wrap"/>
+    
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto">
+                        <TextBox Text="{Binding TranscriptionOutput}"
+                                 IsReadOnly="True"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap"/>
+                    </ScrollViewer>
+                </Grid>
+            </Grid>
+        </Border>
+    </DockPanel>
+</Window>

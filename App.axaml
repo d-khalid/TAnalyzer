@@ -1,0 +1,23 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="TAnalyzer.App">
+    <!-- Universal Button Styles-->
+    <Application.Styles>
+        <FluentTheme/>
+    
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#512BD4"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    
+        <Style Selector="Button.accent">
+            <Setter Property="Background" Value="#00C853"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    
+        <Style Selector="Button:pointerover">
+            <Setter Property="Opacity" Value="0.8"/>
+        </Style>
+    </Application.Styles>
+    
+</Application>
